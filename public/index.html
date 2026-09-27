@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <meta name="theme-color" content="#0D5C75">
+  <title>Speak2Fill — Voice-Guided Form Filling for Everyone</title>
+  <meta name="description" content="Voice-guided form filling web app for elderly, low-literacy, and non-native language speakers. Speak your answers in Malayalam, Hindi, Tamil, Telugu, or English.">
+
+  <!-- Typography: Plus Jakarta Sans for high legibility -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Sans+Malayalam:wght@400;600;700;800&family=Noto+Sans+Devanagari:wght@400;600;700;800&family=Noto+Sans+Tamil:wght@400;600;700;800&family=Noto+Sans+Telugu:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/accessibility.css">
+  <link rel="stylesheet" href="/css/animations.css">
+</head>
+<body class="text-size-normal">
+
+  <!-- Accessible App Header -->
+  <header class="app-header" id="app-header">
+    <div class="header-inner">
+      <!-- Brand Logo / Home Trigger -->
+      <div class="nav-brand" id="nav-brand-logo" role="button" tabindex="0" title="Go to Home">
+        <div class="brand-icon-wrapper">
+          <span>🎙️</span>
+        </div>
+        <div>
+          <div class="brand-name">Speak2Fill</div>
+          <div class="brand-tag">Voice Assistive Forms</div>
+        </div>
+      </div>
+
+      <!-- Action & Accessibility Bar -->
+      <div class="header-actions">
+        <!-- Current Language Badge -->
+        <span class="header-lang-badge" id="header-lang-indicator">മലയാളം</span>
+
+        <!-- Elderly Text Size Controls -->
+        <div class="text-size-controls" aria-label="Text Size Controls">
+          <button id="btn-text-normal" class="btn-size-toggle active" title="Standard Text (18px)">A</button>
+          <button id="btn-text-large" class="btn-size-toggle" title="Large Text (22px)">A+</button>
+          <button id="btn-text-xlarge" class="btn-size-toggle" title="Extra Large Text (26px)">A++</button>
+        </div>
+
+        <!-- Dark Mode Toggle -->
+        <button id="btn-toggle-darkmode" class="btn btn-secondary btn-sm" title="Toggle Theme">
+          🌙 Dark
+        </button>
+
+        <!-- Saved Forms / History Trigger -->
+        <button id="btn-nav-history" class="btn btn-primary btn-sm" title="View Saved Forms">
+          <span>📁</span>
+          <span>My Forms</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Viewport for Component Rendering -->
+  <main class="app-main" id="app-main" role="main">
+    <!-- Screen Components injected here dynamically by app.js -->
+  </main>
+
+  <!-- Application Controller Entrypoint -->
+  <script type="module" src="/js/app.js"></script>
+</body>
+</html>

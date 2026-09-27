@@ -1,0 +1,122 @@
+/* ==========================================================================
+   Speak2Fill Accessibility Stylesheet
+   Built specifically for elderly, low-vision, and assistive navigation users.
+   ========================================================================== */
+
+/* 1. Large Text Mode */
+body.text-size-large {
+  --font-size-base: 22px;
+  --line-height-base: 1.65;
+  --min-touch-target: 64px;
+}
+
+body.text-size-large .hero-title { font-size: 46px; }
+body.text-size-large .hero-tagline { font-size: 26px; }
+body.text-size-large .field-label-text { font-size: 32px; }
+body.text-size-large .field-voice-prompt { font-size: 25px; }
+body.text-size-large .transcript-content { font-size: 28px; }
+body.text-size-large .btn { font-size: 21px; }
+body.text-size-large .btn-mic-accessible { width: 96px; height: 96px; }
+body.text-size-large .mic-inner-icon { font-size: 46px; }
+
+/* 2. Extra Large Text Mode (Elderly & High-Legibility) */
+body.text-size-xlarge {
+  --font-size-base: 26px;
+  --line-height-base: 1.7;
+  --min-touch-target: 72px;
+}
+
+body.text-size-xlarge .hero-title { font-size: 52px; }
+body.text-size-xlarge .hero-tagline { font-size: 30px; }
+body.text-size-xlarge .field-label-text { font-size: 38px; }
+body.text-size-xlarge .field-voice-prompt { font-size: 30px; }
+body.text-size-xlarge .transcript-content { font-size: 34px; }
+body.text-size-xlarge .btn { font-size: 24px; padding: 16px 32px; }
+body.text-size-xlarge .btn-mic-accessible { width: 110px; height: 110px; }
+body.text-size-xlarge .mic-inner-icon { font-size: 52px; }
+
+/* High-Contrast Focus Indicators for Keyboard/Switch Access */
+:focus-visible {
+  outline: 4px solid var(--color-accent) !important;
+  outline-offset: 4px !important;
+}
+
+/* Screen Reader Utility */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ==========================================================================
+   Dark Theme (Warm & Calming Slate Palette - Not clinical/harsh)
+   ========================================================================== */
+
+body.theme-dark {
+  --color-bg: #11171D;
+  --color-surface: #18222C;
+  --color-surface-soft: #1E2B38;
+  --color-border: #2C3C4D;
+  --color-border-dark: #3E536A;
+
+  --color-text-main: #F0F4F8;
+  --color-text-muted: #9BB0C1;
+  --color-text-inverse: #11171D;
+
+  --color-primary: #38BDF8;
+  --color-primary-dark: #0284C7;
+  --color-primary-light: #0C4A6E;
+
+  --color-accent: #FB923C;
+  --color-accent-hover: #F97316;
+  --color-accent-light: #7C2D12;
+}
+
+body.theme-dark .app-header {
+  background-color: var(--color-surface);
+  border-bottom-color: var(--color-border);
+}
+
+body.theme-dark .brand-name {
+  color: #38BDF8;
+}
+
+body.theme-dark .btn-secondary {
+  background-color: var(--color-surface-soft);
+  color: #F0F4F8;
+  border-color: var(--color-border);
+}
+
+body.theme-dark .transcript-card {
+  background-color: var(--color-surface-soft);
+  border-color: var(--color-primary);
+}
+
+body.theme-dark .transcript-content {
+  color: #38BDF8;
+}
+
+body.theme-dark .form-canvas-container {
+  background-color: #0A0F14;
+}
+
+body.theme-dark .resume-alert-card {
+  background: #2D2513;
+  border-color: #D97706;
+}
+
+body.theme-dark .modal-card {
+  background-color: var(--color-surface);
+}
+
+body.theme-dark .form-control-large {
+  background-color: var(--color-surface-soft);
+  color: #fff;
+  border-color: var(--color-border);
+}

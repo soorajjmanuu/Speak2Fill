@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 850 1100" width="100%" height="100%">
+  <!-- Background -->
+  <rect x="0" y="0" width="850" height="1100" fill="#FAF9F5" stroke="#D1CEBF" stroke-width="2"/>
+  <rect x="25" y="25" width="800" height="1050" fill="none" stroke="#0C346B" stroke-width="2.5"/>
+
+  <!-- Bank Header -->
+  <rect x="27" y="27" width="796" height="110" fill="#0C346B"/>
+  <circle cx="90" cy="82" r="32" fill="#FFFFFF"/>
+  <circle cx="90" cy="82" r="16" fill="#0C346B"/>
+  <rect x="85" y="82" width="10" height="22" fill="#FFFFFF"/>
+
+  <text x="145" y="70" font-family="'Helvetica Neue', Arial, sans-serif" font-size="24" font-weight="bold" fill="#FFFFFF" letter-spacing="1">STATE BANK OF INDIA</text>
+  <text x="145" y="93" font-family="'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#E2EBF5">भारतीय स्टेट बैंक • RETAIL ASSETS &amp; DEPOSIT OPERATIONS</text>
+  <text x="145" y="115" font-family="'Helvetica Neue', Arial, sans-serif" font-size="12" fill="#FFCC00" font-weight="bold">SAVINGS BANK ACCOUNT OPENING FORM (CUSTOMER INFORMATION SHEET)</text>
+
+  <!-- Notice Banner -->
+  <rect x="50" y="150" width="750" height="35" fill="#EBF3FC" stroke="#C2DCF7" stroke-width="1"/>
+  <text x="65" y="172" font-family="Arial, sans-serif" font-size="11.5" font-weight="bold" fill="#0C346B">KYC COMPLIANCE (Reserve Bank of India Guidelines)</text>
+
+  <!-- Photo Box -->
+  <rect x="670" y="200" width="125" height="150" fill="#F0F4FA" stroke="#0C346B" stroke-dasharray="3,3"/>
+  <text x="732" y="270" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#0C346B">Affix Recent Passport</text>
+  <text x="732" y="286" font-family="Arial, sans-serif" font-size="9" text-anchor="middle" fill="#666666">Size Photograph</text>
+
+  <!-- Field 1: Full Legal Name -->
+  <g id="field-box-applicant_full_name">
+    <text x="50" y="235" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#1A202C">1. Full Legal Name (पूरा नाम):</text>
+    <text x="50" y="252" font-family="Arial, sans-serif" font-size="11" fill="#4A5568">(In Capital Letters as per PAN / Aadhaar Card)</text>
+    <rect x="250" y="220" width="400" height="36" fill="#FFFFFF" stroke="#A0AEC0" stroke-width="1.5" rx="3"/>
+    <text x="262" y="243" font-family="Courier, monospace" font-size="13" fill="#A0AEC0" id="preview-applicant_full_name">[ Full Legal Name ]</text>
+  </g>
+
+  <!-- Field 2: Date of Birth -->
+  <g id="field-box-date_of_birth">
+    <text x="50" y="305" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#1A202C">2. Date of Birth (जन्म तिथि):</text>
+    <text x="50" y="322" font-family="Arial, sans-serif" font-size="11" fill="#4A5568">(DD/MM/YYYY)</text>
+    <rect x="250" y="292" width="220" height="36" fill="#FFFFFF" stroke="#A0AEC0" stroke-width="1.5" rx="3"/>
+    <text x="262" y="315" font-family="Courier, monospace" font-size="13" fill="#A0AEC0" id="preview-date_of_birth">[ DD / MM / YYYY ]</text>
+  </g>
+
+  <!-- Field 3: PAN or Form 60 -->
+  <g id="field-box-pan_or_form60">
+    <text x="50" y="375" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#1A202C">3. PAN Card Number (पैन नंबर):</text>
+    <text x="50" y="392" font-family="Arial, sans-serif" font-size="11" fill="#4A5568">(Permanent Account Number)</text>
+    <rect x="250" y="362" width="280" height="36" fill="#FFFFFF" stroke="#A0AEC0" stroke-width="1.5" rx="3"/>
+    <text x="262" y="385" font-family="Courier, monospace" font-size="13" fill="#A0AEC0" id="preview-pan_or_form60">[ 10-Digit Alphanumeric ]</text>
+  </g>
+
+  <!-- Field 4: Monthly Income -->
+  <g id="field-box-monthly_income">
+    <text x="50" y="445" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#1A202C">4. Gross Monthly Income (मासिक आय):</text>
+    <text x="50" y="462" font-family="Arial, sans-serif" font-size="11" fill="#4A5568">(In Indian Rupees ₹)</text>
+    <rect x="250" y="432" width="220" height="36" fill="#FFFFFF" stroke="#A0AEC0" stroke-width="1.5" rx="3"/>
+    <text x="262" y="455" font-family="Courier, monospace" font-size="13" fill="#A0AEC0" id="preview-monthly_income">[ Amount in ₹ ]</text>
+  </g>
+
+  <!-- Field 5: Nominee Name -->
+  <g id="field-box-nominee_name">
+    <text x="50" y="515" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#1A202C">5. Nominee Name (नामित व्यक्ति):</text>
+    <text x="50" y="532" font-family="Arial, sans-serif" font-size="11" fill="#4A5568">(Nomination under Banking Regulation Act)</text>
+    <rect x="250" y="502" width="400" height="36" fill="#FFFFFF" stroke="#A0AEC0" stroke-width="1.5" rx="3"/>
+    <text x="262" y="525" font-family="Courier, monospace" font-size="13" fill="#A0AEC0" id="preview-nominee_name">[ Nominee Legal Name ]</text>
+  </g>
+
+  <!-- Field 6: Nominee Relationship -->
+  <g id="field-box-nominee_relationship">
+    <text x="50" y="585" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#1A202C">6. Relationship with Nominee:</text>
+    <text x="50" y="602" font-family="Arial, sans-serif" font-size="11" fill="#4A5568">(Spouse, Child, Parent, Sibling)</text>
+    <rect x="250" y="572" width="260" height="36" fill="#FFFFFF" stroke="#A0AEC0" stroke-width="1.5" rx="3"/>
+    <text x="262" y="595" font-family="Courier, monospace" font-size="13" fill="#A0AEC0" id="preview-nominee_relationship">[ Relationship ]</text>
+  </g>
+
+  <!-- Bank Declarations -->
+  <rect x="50" y="650" width="750" height="180" fill="#F7FAFC" stroke="#CBD5E0" stroke-width="1.5"/>
+  <text x="65" y="675" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#0C346B">APPLICANT DECLARATION &amp; KYC UNDERTAKING:</text>
+  <text x="65" y="698" font-family="Arial, sans-serif" font-size="11" fill="#2D3748">I hereby certify that the information provided is correct. I have read and agree to be bound by</text>
+  <text x="65" y="716" font-family="Arial, sans-serif" font-size="11" fill="#2D3748">the bank's rules and terms governing Savings Bank Accounts, SMS alerts, and electronic banking.</text>
+
+  <line x1="80" y1="800" x2="300" y2="800" stroke="#718096" stroke-width="1"/>
+  <text x="80" y="818" font-family="Arial, sans-serif" font-size="11" fill="#718096">Place &amp; Date</text>
+
+  <line x1="530" y1="800" x2="750" y2="800" stroke="#718096" stroke-width="1"/>
+  <text x="530" y="818" font-family="Arial, sans-serif" font-size="11" fill="#718096">Customer Signature / Thumb Impression</text>
+
+  <!-- Branch Seal Box -->
+  <rect x="500" y="880" width="280" height="140" fill="#FFFBF0" stroke="#DD6B20" stroke-width="1"/>
+  <text x="640" y="905" font-family="Arial, sans-serif" font-size="11" font-weight="bold" text-anchor="middle" fill="#DD6B20">FOR BRANCH USE ONLY</text>
+  <text x="520" y="930" font-family="Arial, sans-serif" font-size="10" fill="#4A5568">Customer ID (CIF): ...............................</text>
+  <text x="520" y="955" font-family="Arial, sans-serif" font-size="10" fill="#4A5568">Account No: .......................................</text>
+  <text x="520" y="980" font-family="Arial, sans-serif" font-size="10" fill="#4A5568">Officer Signature: ...............................</text>
+</svg>
