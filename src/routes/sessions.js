@@ -203,6 +203,69 @@ router.patch('/:id/field/:fieldId', async (req, res) => {
 });
 
 /**
+ * PATCH /api/sessions/:id/progress
+ * Unified field-save endpoint used by React frontend.
+ * Body: { fieldId, fieldLabel, answer, inputMethod }
+ */
+router.patch('/:id/progress', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { fieldId, fieldLabel = '', answer = '', inputMethod = 'typed' } = req.body;
+
+    if (!fieldId) return res.status(400).json({ error: 'fieldId is required' });
+
+    const session = await FillSession.findById(id);
+    if (!session) return res.status(404).json({ error: 'Fill session not found' });
+
+    const template = await FormTemplate.findById(session.templateId);
+    if (!template) return res.status(404).json({ error: 'Linked template not found' });
+
+    let answers = session.answers || {};
+    if (answers instanceof Map) answers = Object.fromEntries(answers);
+    else answers = { ...answers };
+
+    const skipped = (answer === '' || answer === '(skipped)');
+    answers[fieldId] = {
+      fieldId,
+      fieldLabel: fieldLabel || fieldId,
+      value: answer,
+      displayValue: answer,
+      confirmed: !skipped,
+      skipped,
+      inputMethod,
+      updatedAt: new Date(),
+    };
+
+    const totalFields = template.fields.length;
+    const answeredCount = Object.values(answers).filter(a => a.confirmed || a.skipped).length;
+    const progress = totalFields > 0 ? Math.round((answeredCount / totalFields) * 100) : 0;
+    const isFullyCompleted = answeredCount >= totalFields;
+
+    const updatedSession = await FillSession.findByIdAndUpdate(
+      id,
+      { $set: { answers, progress, status: isFullyCompleted ? 'completed' : 'in_progress', updatedAt: new Date() } },
+      { new: true }
+    );
+
+    await FieldProgress.create({
+      sessionId: String(id),
+      fieldId,
+      fieldLabel,
+      spokenLanguage: session.language,
+      rawTranscript: answer,
+      parsedValue: answer,
+      state: skipped ? 'skipped' : 'confirmed',
+      attemptsCount: 1,
+    }).catch(() => {}); // non-critical
+
+    return res.status(200).json({ success: true, session: updatedSession, progress });
+  } catch (err) {
+    console.error('❌ [Session] Error saving progress:', err);
+    return res.status(500).json({ error: 'Failed to save field answer', details: err.message });
+  }
+});
+
+/**
  * POST /api/sessions/:id/complete
  * Mark session as officially completed / submitted
  */

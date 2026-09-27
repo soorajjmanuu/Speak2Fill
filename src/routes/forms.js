@@ -4,7 +4,7 @@ const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 const FormTemplate = require('../models/FormTemplate');
-const geminiService = require('../services/geminiService');
+const openaiService = require('../services/openaiService');
 
 // Multer storage setup for user-uploaded form images
 const storage = multer.diskStorage({
@@ -24,7 +24,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({
   storage,
-  limits: { fileSize: 15 * 1024 * 1024 }, // 15 MB limit
+  limits: { fileSize: 20 * 1024 * 1024 }, // 20 MB limit
   fileFilter: (req, file, cb) => {
     if (file.mimetype.startsWith('image/')) {
       cb(null, true);
@@ -36,8 +36,9 @@ const upload = multer({
 
 /**
  * POST /api/forms/upload
- * Upload a paper form photo (or camera capture), detect fields via Google Gemini Vision,
+ * Upload a paper form photo (or camera capture), detect fields via OpenAI GPT-4o Vision API,
  * create a new FormTemplate in the database, and return the detected template.
+ * Hardcoded fallbacks removed — calls OpenAI directly.
  */
 router.post('/upload', upload.single('image'), async (req, res) => {
   try {
@@ -50,34 +51,34 @@ router.post('/upload', upload.single('image'), async (req, res) => {
       fileUrl = `/uploads/${req.file.filename}`;
       originalName = req.file.originalname || 'Captured Form';
     } else if (req.body.sampleTemplateId) {
-      // User selected a quick sample form
+      // User selected a pre-existing template
       const sample = await FormTemplate.findById(req.body.sampleTemplateId);
       if (sample) {
         return res.status(200).json({
           success: true,
           template: sample,
-          message: 'Loaded sample form template successfully'
+          message: 'Loaded form template successfully'
         });
       }
-      return res.status(404).json({ error: 'Sample form template not found' });
+      return res.status(404).json({ error: 'Form template not found' });
     } else {
       return res.status(400).json({ error: 'No form image file uploaded or template selected' });
     }
 
     console.log(`📸 [Form Upload] Received image: ${filePath} (${originalName})`);
 
-    // Call Gemini API (or contextual OCR fallback) to detect fields
-    const detected = await geminiService.detectFieldsFromImage(filePath, req.file?.mimetype || 'image/jpeg');
+    // Call OpenAI Vision API to detect fields from the uploaded image
+    const detected = await openaiService.detectFieldsFromImage(filePath, req.file?.mimetype || 'image/jpeg');
 
     const formName = req.body.formTitle || detected.formTitle || path.parse(originalName).name || 'Custom Application Form';
 
     const newTemplate = await FormTemplate.create({
       name: formName,
-      description: `Form analyzed and fields detected by AI on ${new Date().toLocaleDateString()}`,
+      description: `Form analyzed and fields detected by OpenAI GPT-4o on ${new Date().toLocaleDateString()}`,
       category: detected.category || 'custom',
       imageUrl: fileUrl,
       fields: detected.fields || [],
-      geminiDetected: true
+      geminiDetected: false
     });
 
     console.log(`✅ [Form Upload] FormTemplate created with ID: ${newTemplate._id} and ${newTemplate.fields.length} fields.`);
@@ -88,17 +89,17 @@ router.post('/upload', upload.single('image'), async (req, res) => {
       detectedFieldsCount: newTemplate.fields.length
     });
   } catch (err) {
-    console.error('❌ [Form Upload] Error processing upload:', err);
+    console.error('❌ [Form Upload] Error processing upload with OpenAI:', err.message);
     return res.status(500).json({
-      error: 'Failed to process form image and detect fields',
-      details: err.message
+      error: 'Failed to process form image with OpenAI API',
+      message: err.message
     });
   }
 });
 
 /**
  * GET /api/forms/templates
- * Retrieve all available form templates (sample presets + user-uploaded templates)
+ * Retrieve all available form templates
  */
 router.get('/templates', async (req, res) => {
   try {

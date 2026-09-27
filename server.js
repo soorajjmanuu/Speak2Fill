@@ -18,8 +18,8 @@ const PORT = process.env.PORT || 3000;
 // Middleware
 app.use(cors());
 app.use(morgan('dev'));
-app.use(express.json({ limit: '20mb' }));
-app.use(express.urlencoded({ extended: true, limit: '20mb' }));
+app.use(express.json({ limit: '30mb' }));
+app.use(express.urlencoded({ extended: true, limit: '30mb' }));
 
 // Ensure upload directory exists
 const uploadDir = path.join(__dirname, 'uploads');
@@ -27,25 +27,31 @@ if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir, { recursive: true });
 }
 
-// Serve static frontend and uploaded files
-app.use(express.static(path.join(__dirname, 'public')));
+// Check for compiled React client in client/dist, fallback to public
+const clientDist = path.join(__dirname, 'client/dist');
+const staticDir = fs.existsSync(clientDist) ? clientDist : path.join(__dirname, 'public');
+console.log(`📁 [Static Files] Serving frontend from: ${staticDir}`);
+
+app.use(express.static(staticDir));
 app.use('/uploads', express.static(uploadDir));
+app.use('/assets', express.static(path.join(__dirname, 'public/assets')));
 
 // System Status and Diagnostics API
 app.get('/api/status', (req, res) => {
   res.json({
     status: 'online',
     appName: 'Speak2Fill',
-    version: '1.0.0',
+    version: '2.0.0',
+    frontend: fs.existsSync(clientDist) ? 'React (Vite Build)' : 'Vanilla JS',
     database: getDbMode(),
     aiServices: {
-      geminiVision: {
-        configured: Boolean(process.env.GEMINI_API_KEY && process.env.GEMINI_API_KEY.trim().length > 0),
-        status: process.env.GEMINI_API_KEY ? 'Active (Google Gemini 1.5 Flash)' : 'Fallback Contextual Detector Active'
+      openaiVision: {
+        configured: Boolean(process.env.OPENAI_API_KEY && process.env.OPENAI_API_KEY.trim().length > 0),
+        status: process.env.OPENAI_API_KEY ? 'Active (OpenAI GPT-4o Vision)' : 'OPENAI_API_KEY Missing'
       },
       sarvamIndicSpeech: {
         configured: Boolean(process.env.SARVAM_API_KEY && process.env.SARVAM_API_KEY.trim().length > 0),
-        status: process.env.SARVAM_API_KEY ? 'Active (Sarvam Saarika STT + Bulbul TTS)' : 'Client Web Speech & Fallback Active'
+        status: process.env.SARVAM_API_KEY ? 'Active (Sarvam saaras:v3 STT + bulbul:v3 TTS)' : 'SARVAM_API_KEY Missing'
       }
     },
     supportedLanguages: [
@@ -63,10 +69,13 @@ app.use('/api/forms', formsRouter);
 app.use('/api/sessions', sessionsRouter);
 app.use('/api/speech', speechRouter);
 
-// Fallback to index.html for SPA frontend routing (Express 5 compatible)
+// Fallback to index.html for SPA frontend routing
 app.use((req, res, next) => {
   if (req.method === 'GET' && !req.path.startsWith('/api') && !req.path.startsWith('/uploads')) {
-    return res.sendFile(path.join(__dirname, 'public', 'index.html'));
+    const indexPath = path.join(staticDir, 'index.html');
+    if (fs.existsSync(indexPath)) {
+      return res.sendFile(indexPath);
+    }
   }
   if (req.path.startsWith('/api')) {
     return res.status(404).json({ error: 'Endpoint not found' });
@@ -93,8 +102,8 @@ async function startServer() {
     console.log('🎙️   Speak2Fill — Voice-Guided Assistive Form Filler');
     console.log(`🌐  Server running at: http://localhost:${PORT}`);
     console.log(`🗄️   Database mode: ${getDbMode().toUpperCase()}`);
-    console.log(`🤖  Gemini AI: ${process.env.GEMINI_API_KEY ? 'CONFIGURED' : 'READY (Contextual Fallback Active)'}`);
-    console.log(`🇮🇳  Sarvam AI: ${process.env.SARVAM_API_KEY ? 'CONFIGURED' : 'READY (Browser Web Speech Active)'}`);
+    console.log(`🤖  OpenAI Vision: ${process.env.OPENAI_API_KEY ? 'CONFIGURED' : 'NEEDS OPENAI_API_KEY'}`);
+    console.log(`🇮🇳  Sarvam AI: ${process.env.SARVAM_API_KEY ? 'ACTIVE (bulbul:v3 + saaras:v3)' : 'NEEDS SARVAM_API_KEY'}`);
     console.log('======================================================\n');
   });
 }
